@@ -4,7 +4,7 @@ echo " -=- Getting software -=-"
 sudo apt-get update
 sudo apt-get -y install libav-tools screen lighttpd php php-cgi git
 cd /opt
-sudo git clone https://github.com/Fmstrat/diy-ipmi
+sudo git clone https://github.com/seffyroff/diy-ipmi
 sudo chown pi diy-ipmi -R
 chmod +x /opt/diy-ipmi/Pi3/*.py
 chmod +x /opt/diy-ipmi/Pi3/*.sh

@@ -1,7 +1,7 @@
 # A DIY IPMI / IP KVM system utilizing the Raspberry Pi
 A web-accessable IPMI / IP KVM system that provides full keyboard control, monitor view, and and the ability to reboot computers with standard motherboards remotely as if you were sitting in front of them with a keyboard and monitor.
 
-![Screenshot](https://github.com/Fmstrat/diy-ipmi/raw/master/Resources/Screenshot.png)
+![Screenshot](https://github.com/seffyroff/diy-ipmi/raw/master/Resources/Screenshot.png)
 
 ## Requirements
 - Rasberry Pi 3 Model B (https://www.adafruit.com/product/3055)
@@ -48,9 +48,9 @@ network={
 ## Setting up the hardware
 Here is a diagram of how you connect all of the pieces:
 
-![Diagram](https://github.com/Fmstrat/diy-ipmi/raw/master/Resources/Diagram-sm.png)
+![Diagram](https://github.com/seffyroff/diy-ipmi/raw/master/Resources/Diagram-sm.png)
 
-View the [high resolution version](https://raw.githubusercontent.com/Fmstrat/diy-ipmi/master/Resources/Diagram.png)
+View the [high resolution version](https://raw.githubusercontent.com/seffyroff/diy-ipmi/master/Resources/Diagram.png)
 
 The detailed process is to:
 - Connect the Pi3 to the relay board using this method: http://youtu.be/oaf_zQcrg7g
@@ -63,7 +63,7 @@ The detailed process is to:
 ## Quick Install
 The quick method of installation is to simply run the install script on the Pi3 as the `pi` user:
 ```
-wget https://raw.githubusercontent.com/Fmstrat/diy-ipmi/master/install.sh
+wget https://raw.githubusercontent.com/seffyroff/diy-ipmi/master/install.sh
 chmod +x install.sh
 ./install.sh
 ```
@@ -84,7 +84,7 @@ First, let's get all the software we need:
 sudo apt-get update
 sudo apt-get -y install libav-tools screen lighttpd php php-cgi git
 cd /opt
-sudo git clone https://github.com/Fmstrat/diy-ipmi
+sudo git clone https://github.com/seffyroff/diy-ipmi
 sudo chown pi diy-ipmi -R
 chmod +x /opt/diy-ipmi/Pi3/*.py
 chmod +x /opt/diy-ipmi/Pi3/*.sh
