@@ -1,9 +1,7 @@
 #!/bin/bash
 
-echo " -=- Getting software -=-"
-sudo apt-get update
+echo " -=- Removing software -=-"
 sudo apt -y purge libav-tools screen lighttpd php php-cgi git
-sudo rm -rf /opt/diy-ipmi
 
 sudo rm /var/www/ipmipasswd
 sudo rm /etc/lighttpd/lighttpd.conf
@@ -53,5 +51,6 @@ cd -
 
 echo " -=- Enabling HID on Pi0 and adding boot options -=-"
 echo "sudo rm -f /etc/rc.local" >> /dev/ttyUSB0
-
+sudo rm -rf /opt/diy-ipmi
+sudo rm -f /home/pi/install.sh
 echo " -=- Uninstall Finished! -=-"
