@@ -27,7 +27,7 @@ while [ $LOGINSUCCESS -eq 0 ]; do
 	fi
 done
 
-echo " -=- Setting up auto login on the serial terminal -=-"
+echo " -=- Disabling auto login on the serial terminal -=-"
 echo "sudo systemctl disable serial-getty@ttyAMA0.service" >> /dev/ttyUSB0
 echo "sudo rm /etc/systemd/system/serial-getty@ttyAMA0.service" >> /dev/ttyUSB0
 echo "sudo systemctl daemon-reload" >> /dev/ttyUSB0
@@ -37,20 +37,27 @@ echo "sudo apt-get -y install dhcpcd5 isc-dhcp-client isc-dhcp-common" >> /dev/t
 echo " -=- Waiting for install of network to complete (90s) -=-"
 sleep 90
 
-echo " -=- Transfering files to Pi0 for HID -=-"
+echo " -=- Removing tools for HID -=-"
 echo "rm -f /tmp/B64" >> /dev/ttyUSB0
 echo "rm -f /home/pi/enableHID.sh" >> /dev/ttyUSB0
 
-echo " -=- Transfering files to Pi0 for HID send keys -=-"
+echo " -=- removing HID send keys -=-"
 echo "rm -f /tmp/B64" >> /dev/ttyUSB0
 echo "rm -f sendkeys.c" >> /dev/ttyUSB0
+echo "rm -f sendkeys" >> /dev/ttyUSB0
 
-echo " -=- Compiling and transfering files to Pi0 for HID reset -=-"
+echo " -=-removing HID reset -=-"
 echo "rm -f /home/pi/hub-ctrl" >> /dev/ttyUSB0
 cd -
 
-echo " -=- Enabling HID on Pi0 and adding boot options -=-"
+echo " -=- Removing Pi0 boot options -=-"
 echo "sudo rm -f /etc/rc.local" >> /dev/ttyUSB0
+
+echo " -=- Disabling auto login on the serial terminal -=-"
+echo "sudo systemctl disable serial-getty@ttyAMA0.service" >> /dev/ttyUSB0
+echo "sudo rm /etc/systemd/system/serial-getty@ttyAMA0.service" >> /dev/ttyUSB0
+echo "sudo systemctl daemon-reload" >> /dev/ttyUSB0
+
 sudo rm -rf /opt/diy-ipmi
 sudo rm -f /home/pi/install.sh
 echo " -=- Uninstall Finished! -=-"
