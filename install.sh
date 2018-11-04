@@ -86,11 +86,12 @@ echo "sudo cp /lib/systemd/system/serial-getty@.service /etc/systemd/system/seri
 echo "sudo sed -i 's/agetty --keep-baud 115200/agetty -a pi --keep-baud 115200/g' /etc/systemd/system/serial-getty@ttyAMA0.service" >> /dev/ttyUSB0
 echo "sudo systemctl daemon-reload" >> /dev/ttyUSB0
 
-echo " -=- Disabling network to speed Pi0 bootup -=-"
-echo "sudo systemctl disable networking" >> /dev/ttyUSB0
-echo "sudo apt-get -y remove dhcpcd5 isc-dhcp-client isc-dhcp-common" >> /dev/ttyUSB0
-echo " -=- Waiting for removal of network to complete (90s) -=-"
-sleep 90
+# Changed by Seffyroff - keep network running for admin/debug on Pi0 - see README for wifi setup - needs RPi0W or maybe some external networking interface
+# echo " -=- Disabling network to speed Pi0 bootup -=-"
+# echo "sudo systemctl disable networking" >> /dev/ttyUSB0
+# echo "sudo apt-get -y remove dhcpcd5 isc-dhcp-client isc-dhcp-common" >> /dev/ttyUSB0
+# echo " -=- Waiting for removal of network to complete (90s) -=-"
+# sleep 90
 
 echo " -=- Transfering files to Pi0 for HID -=-"
 echo "rm -f /tmp/B64" >> /dev/ttyUSB0
@@ -105,13 +106,18 @@ echo "base64 -d /tmp/B64 > /home/pi/sendkeys.c" >> /dev/ttyUSB0
 echo "gcc -o /home/pi/sendkeys /home/pi/sendkeys.c" >> /dev/ttyUSB0
 
 echo " -=- Compiling and transfering files to Pi0 for HID reset -=-"
-sudo apt-get -y install libusb-dev
-cd /opt/diy-ipmi/Pi0/
-gcc -o hub-ctrl hub-ctrl.c -lusb
-for LINE in $(base64 hub-ctrl); do echo "echo $LINE >> /tmp/B64" >> /dev/ttyUSB0; done
-echo "base64 -d /tmp/B64 > /home/pi/hub-ctrl" >> /dev/ttyUSB0
-echo "chmod +x /home/pi/hub-ctrl" >> /dev/ttyUSB0
-cd -
+echo "sudo apt-get -y install libusb-dev" >> /dev/ttyUSB0
+echo "rm -f /tmp/B64" >> /dev/ttyUSB0
+for LINE in $(base64 /opt/diy-ipmi/Pi0/hub-ctrl.c); do echo "echo $LINE >> /tmp/B64" >> /dev/ttyUSB0; done
+echo "base64 -d /tmp/B64 > /home/pihub-ctrl.c" >> /dev/ttyUSB0
+echo "gcc -o /home/pi/hub-ctrl /home/pi/hub-ctrl.c -lusb" >> /dev/ttyUSB0
+
+# cd /opt/diy-ipmi/Pi0/
+# gcc -o hub-ctrl hub-ctrl.c -lusb
+# for LINE in $(base64 hub-ctrl); do echo "echo $LINE >> /tmp/B64" >> /dev/ttyUSB0; done
+# echo "base64 -d /tmp/B64 > /home/pi/hub-ctrl" >> /dev/ttyUSB0
+# echo "chmod +x /home/pi/hub-ctrl" >> /dev/ttyUSB0
+# cd -
 
 echo " -=- Enabling HID on Pi0 and adding boot options -=-"
 echo "sudo /home/pi/enableHID.sh" >> /dev/ttyUSB0
